@@ -28,12 +28,6 @@
     .mobile-menu-btn { background: none; border: none; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; letter-spacing: 0.2em; color: #8A8A96; padding: 12px 0; text-align: left; transition: color 0.15s; border-bottom: 1px solid #F0F0F2; }
     .mobile-menu-btn:last-child { border-bottom: none; }
     .mobile-menu-btn:hover, .mobile-menu-btn.active { color: #1A1A2E; font-weight: 700; }
-    @media (max-width: 640px) {
-      .nav-links { display: none; }
-      .contact-btn { display: none; }
-      .hamburger { display: flex; }
-      nav { padding: 0 20px; }
-    }
     #tagline { position: fixed; top: 120px; left: 0; right: 0; text-align: center; z-index: 10; font-family: 'BRoya', sans-serif; font-size: 15px; color: #8A8A96; pointer-events: none; }
     #title { position: fixed; bottom: 80px; left: 0; right: 0; text-align: center; z-index: 10; font-family: 'Exo 2', sans-serif; font-size: 48px; font-weight: 700; letter-spacing: 0.3em; color: #1A1A2E; pointer-events: none; }
     #content { position: fixed; inset: 0; z-index: 10; display: none; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.4s ease; }
@@ -121,6 +115,37 @@
     .mgmt-title { font-family: 'BRoya', sans-serif; font-size: 12px; color: #8A8A96; }
     .anim-contact h2 { font-family: 'Exo 2', sans-serif; font-size: 42px; font-weight: 700; letter-spacing: 0.3em; color: #1A1A2E; margin-bottom: 6px; }
     .anim-contact .sub { font-family: 'BRoya', sans-serif; color: #8A8A96; font-size: 15px; margin-bottom: 4px; }
+
+    /* ===== MOBILE ONLY ===== */
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .contact-btn { display: none; }
+      .hamburger { display: flex; }
+      nav { padding: 0 20px; }
+      .lcd-screen { padding: 40px 16px 24px; width: 95%; overflow-y: auto; max-height: 80vh; }
+      .anim-studio h2 { font-size: 28px; }
+      .anim-studio .sub { font-size: 14px; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); max-width: 100%; }
+      .service-en { font-size: 9px; letter-spacing: 0.1em; }
+      .service-fa { font-size: 13px; }
+      .earthos-title { font-size: 36px; letter-spacing: 0.2em; }
+      .anim-productions p { font-size: 13px; }
+      .anim-about h2 { font-size: 28px; }
+      .about-para { font-size: 13px; line-height: 2; }
+      .mgmt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+      .mgmt-card { min-width: unset; padding: 10px; }
+      .mgmt-name { font-size: 12px; }
+      .mgmt-title { font-size: 10px; }
+      .anim-contact h2 { font-size: 28px; }
+      .contact-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-item-title { font-size: 13px; }
+      .contact-item-desc { font-size: 11px; }
+      .invest-layout { flex-direction: column; }
+      .invest-person-side { width: 100%; }
+      .social-links { flex-direction: column; }
+      #title { font-size: 28px; letter-spacing: 0.15em; }
+      #tagline { font-size: 13px; }
+    }
   </style>
 </head>
 <body>
