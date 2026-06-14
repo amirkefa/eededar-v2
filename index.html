@@ -18,6 +18,22 @@
     .nav-btn:hover, .nav-btn.active { color: #1A1A2E; font-weight: 700; }
     .contact-btn { background: none; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; letter-spacing: 0.2em; color: #1A1A2E; border: 1px solid #1A1A2E; padding: 8px 24px; transition: all 0.15s; }
     .contact-btn:hover { background: #1A1A2E; color: white; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #1A1A2E; transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; top: 64px; left: 0; right: 0; z-index: 99; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid #E8E8ED; flex-direction: column; padding: 16px 32px; gap: 4px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu-btn { background: none; border: none; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; letter-spacing: 0.2em; color: #8A8A96; padding: 12px 0; text-align: left; transition: color 0.15s; border-bottom: 1px solid #F0F0F2; }
+    .mobile-menu-btn:last-child { border-bottom: none; }
+    .mobile-menu-btn:hover, .mobile-menu-btn.active { color: #1A1A2E; font-weight: 700; }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .contact-btn { display: none; }
+      .hamburger { display: flex; }
+      nav { padding: 0 20px; }
+    }
     #tagline { position: fixed; top: 120px; left: 0; right: 0; text-align: center; z-index: 10; font-family: 'BRoya', sans-serif; font-size: 15px; color: #8A8A96; pointer-events: none; }
     #title { position: fixed; bottom: 80px; left: 0; right: 0; text-align: center; z-index: 10; font-family: 'Exo 2', sans-serif; font-size: 48px; font-weight: 700; letter-spacing: 0.3em; color: #1A1A2E; pointer-events: none; }
     #content { position: fixed; inset: 0; z-index: 10; display: none; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.4s ease; }
@@ -117,7 +133,16 @@
     <button class="nav-btn" id="btn-about" onclick="goSection('about')">ABOUT</button>
   </div>
   <button class="contact-btn" onclick="goSection('contact')">CONTACT</button>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="mobile-menu" id="mobile-menu">
+  <button class="mobile-menu-btn" id="mbtn-studio" onclick="goSection('studio');toggleMenu()">STUDIO</button>
+  <button class="mobile-menu-btn" id="mbtn-productions" onclick="goSection('productions');toggleMenu()">PRODUCTIONS</button>
+  <button class="mobile-menu-btn" id="mbtn-about" onclick="goSection('about');toggleMenu()">ABOUT</button>
+  <button class="mobile-menu-btn" id="mbtn-contact" onclick="goSection('contact');toggleMenu()">CONTACT</button>
+</div>
 <div id="tagline">آینده سینما اینجا ساخته می‌شود</div>
 <div id="title">EEDEDAR</div>
 <div id="content">
@@ -129,6 +154,7 @@
   </div>
 </div>
 <script>
+function toggleMenu(){var h=document.getElementById('hamburger'),m=document.getElementById('mobile-menu');h.classList.toggle('open');m.classList.toggle('open');}
 function updateClock(){var n=new Date(),t=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0')+':'+n.getSeconds().toString().padStart(2,'0');var e=document.getElementById('lcd-time');if(e)e.textContent=t;}
 setInterval(updateClock,1000);updateClock();
 var blinkInterval=null;
@@ -187,7 +213,7 @@ let currentSection='home',mouseX=0,mouseY=0,time=0;
 document.addEventListener('mousemove',function(e){mouseX=(e.clientX/window.innerWidth-0.5)*0.6;mouseY=(e.clientY/window.innerHeight-0.5)*0.6;});
 function showContent(section){const content=document.getElementById('content');const lcd=document.getElementById('lcd-screen');document.getElementById('content-inner').innerHTML=contents[section]||'';content.classList.add('visible');lcd.classList.remove('poweron','poweroff');void lcd.offsetWidth;lcd.classList.add('poweron');setTimeout(function(){content.classList.add('shown');if(section==='productions')startBlink();},50);}
 function hideContent(){stopBlink();const content=document.getElementById('content');const lcd=document.getElementById('lcd-screen');content.classList.remove('shown');lcd.classList.remove('poweron');lcd.classList.add('poweroff');setTimeout(function(){content.classList.remove('visible');lcd.classList.remove('poweroff');},300);}
-function goSection(section){currentSection=section;document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');});const btn=document.getElementById('btn-'+section);if(btn)btn.classList.add('active');document.getElementById('tagline').style.display=section==='home'?'block':'none';document.getElementById('title').style.display=section==='home'?'block':'none';hideContent();setTimeout(function(){if(section==='home'){cubes.forEach(function(c,i){c.scale.set(1,1,1);targetPositions[i].copy(homePositions[i]);});return;}cubes.forEach(function(_,i){const dir=homePositions[i].clone().normalize();if(section==='studio'){targetPositions[i].set(dir.x*(4+Math.random()*3),dir.y*(4+Math.random()*3),dir.z*(4+Math.random()*3));setTimeout(function(){showContent('studio');},600);}if(section==='productions'){const angle=(i/cubes.length)*Math.PI*2;targetPositions[i].set(Math.cos(angle)*(4+Math.random()),(Math.random()-0.5)*2,Math.sin(angle)*(4+Math.random()));setTimeout(function(){showContent('productions');},600);}if(section==='about'){targetPositions[i].set(dir.x*(5+Math.random()*4),dir.y*(5+Math.random()*4),-4-Math.random()*4);setTimeout(function(){showContent('about');},800);}if(section==='contact'){targetPositions[i].set(dir.x*(5+Math.random()*3),dir.y*(5+Math.random()*3),(Math.random()-0.5)*6);setTimeout(function(){showContent('contact');},600);}});},350);}
+function goSection(section){currentSection=section;document.querySelectorAll('.nav-btn,.mobile-menu-btn').forEach(function(b){b.classList.remove('active');});var btn=document.getElementById('btn-'+section);if(btn)btn.classList.add('active');var mbtn=document.getElementById('mbtn-'+section);if(mbtn)mbtn.classList.add('active');document.getElementById('tagline').style.display=section==='home'?'block':'none';document.getElementById('title').style.display=section==='home'?'block':'none';hideContent();setTimeout(function(){if(section==='home'){cubes.forEach(function(c,i){c.scale.set(1,1,1);targetPositions[i].copy(homePositions[i]);});return;}cubes.forEach(function(_,i){const dir=homePositions[i].clone().normalize();if(section==='studio'){targetPositions[i].set(dir.x*(4+Math.random()*3),dir.y*(4+Math.random()*3),dir.z*(4+Math.random()*3));setTimeout(function(){showContent('studio');},600);}if(section==='productions'){const angle=(i/cubes.length)*Math.PI*2;targetPositions[i].set(Math.cos(angle)*(4+Math.random()),(Math.random()-0.5)*2,Math.sin(angle)*(4+Math.random()));setTimeout(function(){showContent('productions');},600);}if(section==='about'){targetPositions[i].set(dir.x*(5+Math.random()*4),dir.y*(5+Math.random()*4),-4-Math.random()*4);setTimeout(function(){showContent('about');},800);}if(section==='contact'){targetPositions[i].set(dir.x*(5+Math.random()*3),dir.y*(5+Math.random()*3),(Math.random()-0.5)*6);setTimeout(function(){showContent('contact');},600);}});},350);}
 function animate(){requestAnimationFrame(animate);time+=0.015;cubes.forEach(function(cube,i){cube.position.lerp(targetPositions[i],0.08);});const positions=waveGeo.getAttribute('position');for(let i=0;i<waveWidth;i++)for(let j=0;j<waveDepth;j++){const idx=i*waveDepth+j;positions.setY(idx,Math.sin(positions.getX(idx)*0.8+time)*0.3+Math.cos(positions.getZ(idx)*0.6+time*0.8)*0.2);}positions.needsUpdate=true;if(currentSection==='home'){group.rotation.x+=0.002;group.rotation.y+=0.004;}else{group.rotation.x*=0.95;group.rotation.y*=0.95;}camera.position.x+=(mouseX-camera.position.x)*0.04;camera.position.y+=(-mouseY-camera.position.y)*0.04;camera.lookAt(scene.position);renderer.render(scene,camera);}
 animate();
 window.addEventListener('resize',function(){camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth,window.innerHeight);});
