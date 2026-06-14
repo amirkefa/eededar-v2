@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EEDEDAR STUDIO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    @font-face { font-family: 'BRoya'; src: url('BROYA.TTF') format('truetype'); font-weight: normal; font-style: normal; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #F0F0F2; overflow: hidden; font-family: 'BRoya', Arial, sans-serif; }
+    #canvas-container { position: fixed; inset: 0; z-index: 0; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; background: rgba(255,255,255,0.7); backdrop-filter: blur(12px); border-bottom: 1px solid #E8E8ED; }
+    .logo { font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 0.2em; color: #1A1A2E; cursor: pointer; }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-btn { background: none; border: none; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; letter-spacing: 0.2em; color: #8A8A96; transition: color 0.15s; }
+    .nav-btn:hover, .nav-btn.active { color: #1A1A2E; font-weight: 700; }
+    .contact-btn { background: none; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; letter-spacing: 0.2em; color: #1A1A2E; border: 1px solid #1A1A2E; padding: 8px 24px; transition: all 0.15s; }
+    .contact-btn:hover { background: #1A1A2E; color: white; }
+    #tagline { position: fixed; top: 120px; left: 0; right: 0; text-align: center; z-index: 10; font-family: 'BRoya', sans-serif; font-size: 15px; color: #8A8A96; pointer-events: none; }
+    #title { position: fixed; bottom: 80px; left: 0; right: 0; text-align: center; z-index: 10; font-family: 'Exo 2', sans-serif; font-size: 48px; font-weight: 700; letter-spacing: 0.3em; color: #1A1A2E; pointer-events: none; }
+    #content { position: fixed; inset: 0; z-index: 10; display: none; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.4s ease; }
+    #content.visible { display: flex; }
+    #content.shown { opacity: 1; }
+    .lcd-screen { position: relative; padding: 48px 56px; max-width: 860px; width: 90%; text-align: center; pointer-events: all; background: rgba(240,240,242,0.82); backdrop-filter: blur(16px); box-shadow: 0 0 0 1px rgba(100,120,160,0.3), 0 0 20px rgba(80,120,200,0.12), 0 0 60px rgba(80,120,200,0.06), inset 0 0 40px rgba(255,255,255,0.4); overflow: hidden; }
+    .lcd-screen::before { content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(26,26,46,0.03) 3px, rgba(26,26,46,0.03) 4px); }
+    .lcd-screen::after { content: ''; position: absolute; left: 0; right: 0; height: 3px; z-index: 2; pointer-events: none; background: linear-gradient(90deg, transparent, rgba(80,140,255,0.15), transparent); animation: scanMove 4s linear infinite; }
+    @keyframes scanMove { 0% { top: -3px; } 100% { top: 100%; } }
+    .lcd-corner { position: absolute; width: 20px; height: 20px; pointer-events: none; z-index: 3; }
+    .lcd-corner::before, .lcd-corner::after { content: ''; position: absolute; background: rgba(80,120,200,0.6); }
+    .lcd-corner::before { width: 100%; height: 1.5px; }
+    .lcd-corner::after { width: 1.5px; height: 100%; }
+    .lcd-corner.tl { top: 12px; left: 12px; } .lcd-corner.tl::before { top: 0; left: 0; } .lcd-corner.tl::after { top: 0; left: 0; }
+    .lcd-corner.tr { top: 12px; right: 12px; transform: scaleX(-1); } .lcd-corner.tr::before { top: 0; left: 0; } .lcd-corner.tr::after { top: 0; left: 0; }
+    .lcd-corner.bl { bottom: 12px; left: 12px; transform: scaleY(-1); } .lcd-corner.bl::before { top: 0; left: 0; } .lcd-corner.bl::after { top: 0; left: 0; }
+    .lcd-corner.br { bottom: 12px; right: 12px; transform: scale(-1); } .lcd-corner.br::before { top: 0; left: 0; } .lcd-corner.br::after { top: 0; left: 0; }
+    .lcd-statusbar { position: absolute; top: 20px; left: 20px; right: 20px; display: flex; justify-content: space-between; align-items: center; font-family: 'Exo 2', sans-serif; font-size: 9px; letter-spacing: 0.3em; color: rgba(80,120,200,0.5); pointer-events: none; z-index: 3; }
+    .lcd-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(80,200,120,0.7); box-shadow: 0 0 6px rgba(80,200,120,0.5); animation: dotPulse 2s ease-in-out infinite; }
+    @keyframes dotPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+    @keyframes lcdPowerOn { 0% { clip-path: inset(50% 0 50% 0); opacity: 0; filter: brightness(3); } 40% { clip-path: inset(0% 0 0% 0); opacity: 1; filter: brightness(1.5); } 100% { clip-path: inset(0% 0 0% 0); opacity: 1; filter: brightness(1); } }
+    @keyframes lcdPowerOff { 0% { clip-path: inset(0% 0 0% 0); opacity: 1; } 100% { clip-path: inset(50% 0 50% 0); opacity: 0; } }
+    .lcd-screen.poweron { animation: lcdPowerOn 0.5s cubic-bezier(0.25,0.46,0.45,0.94) forwards; }
+    .lcd-screen.poweroff { animation: lcdPowerOff 0.3s cubic-bezier(0.55,0.06,0.68,0.19) forwards; }
+    .lcd-inner { position: relative; z-index: 4; }
+    .label { font-family: 'Exo 2', sans-serif; font-size: 11px; letter-spacing: 0.4em; color: #8A8A96; margin-bottom: 16px; display: block; }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(200,200,208,0.5); max-width: 720px; margin: 24px auto 0; pointer-events: all; }
+    .service-item { background: rgba(255,255,255,0.6); padding: 16px 12px; text-align: center; transition: background 0.15s; }
+    .service-item:hover { background: rgba(255,255,255,0.9); }
+    .service-en { font-family: 'Exo 2', sans-serif; font-size: 11px; letter-spacing: 0.3em; color: #8A8A96; margin-bottom: 6px; }
+    .service-fa { font-family: 'BRoya', sans-serif; font-size: 16px; color: #1A1A2E; }
+    .earthos-title { display: block; font-family: 'Exo 2', sans-serif; font-size: 68px; font-weight: 900; letter-spacing: 0.4em; background: linear-gradient(105deg, #555 0%, #999 20%, #fff 40%, #bbb 55%, #fff 70%, #777 85%, #444 100%); background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: metalShine 2.5s linear infinite; margin-bottom: 12px; }
+    @keyframes metalShine { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
+    .status-badge { font-family: 'Exo 2', sans-serif; display: inline-block; font-size: 10px; letter-spacing: 0.3em; color: #8A8A96; border: 1px solid #C8C8D0; padding: 4px 12px; margin-bottom: 16px; }
+    .anim-productions p { font-family: 'BRoya', sans-serif; color: #4A4A5A; max-width: 400px; margin: 0 auto; line-height: 2; font-size: 15px; }
+    .earthos-link { display: inline-block; margin-top: 20px; border: 1px solid #1A1A2E; color: #1A1A2E; padding: 10px 28px; font-size: 13px; letter-spacing: 0.2em; pointer-events: all; cursor: pointer; text-decoration: none; font-family: 'Exo 2', sans-serif; transition: background 0.1s, color 0.1s; }
+    .earthos-link:hover { background: #1A1A2E !important; color: white !important; }
+    .earthos-link.lit { background: #1A1A2E; color: white; }
+    .contact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(200,200,208,0.5); max-width: 760px; margin: 20px auto 0; pointer-events: all; }
+    .contact-item { background: rgba(255,255,255,0.6); padding: 20px 12px; text-align: center; cursor: pointer; transition: background 0.15s; }
+    .contact-item:hover { background: rgba(255,255,255,0.9); }
+    .contact-item.active { background: #1A1A2E; }
+    .contact-item.active .contact-item-title, .contact-item.active .contact-item-desc { color: white; }
+    .contact-item-title { font-family: 'BRoya', sans-serif; font-size: 17px; color: #1A1A2E; margin-bottom: 6px; }
+    .contact-item-desc { font-family: 'BRoya', sans-serif; font-size: 13px; color: #8A8A96; line-height: 1.8; }
+    .contact-detail { margin-top: 20px; padding: 16px 20px; background: rgba(255,255,255,0.5); border: 1px solid rgba(200,200,208,0.5); animation: fadeInUp 0.4s ease forwards; pointer-events: all; }
+    .contact-detail p { font-family: 'BRoya', sans-serif; font-size: 16px; color: #4A4A5A; line-height: 2.2; direction: rtl; text-align: center; }
+    .contact-detail a { color: #1A1A2E; font-weight: 700; text-decoration: none; border-bottom: 1px solid #1A1A2E; }
+    .contact-detail a:hover { color: rgba(80,120,200,0.8); border-color: rgba(80,120,200,0.8); }
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+    .invest-layout { display: flex; gap: 16px; align-items: flex-start; text-align: left; }
+    .invest-form-side { flex: 1; }
+    .invest-form-side .invest-form { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; pointer-events: all; }
+    .invest-form-side input { font-family: 'BRoya', sans-serif; font-size: 13px; padding: 8px 10px; border: 1px solid rgba(200,200,208,0.8); background: rgba(255,255,255,0.8); color: #1A1A2E; direction: rtl; outline: none; transition: border 0.15s; width: 100%; }
+    .invest-form-side input:focus { border-color: rgba(80,120,200,0.5); }
+    .invest-form-side input::placeholder { color: #C8C8D0; }
+    .invest-submit { grid-column: 1 / -1; margin-top: 4px; background: #1A1A2E; color: white; border: none; cursor: pointer; font-family: 'BRoya', sans-serif; font-size: 14px; padding: 10px; transition: background 0.15s; pointer-events: all; width: 100%; }
+    .invest-submit:hover { background: rgba(80,120,200,0.9); }
+    .invest-success { font-family: 'BRoya', sans-serif; font-size: 15px; color: rgba(80,200,120,0.9); margin-top: 10px; display: none; direction: rtl; text-align: right; }
+    .invest-person-side { width: 200px; flex-shrink: 0; background: rgba(255,255,255,0.6); border: 1px solid rgba(200,200,208,0.5); padding: 16px; direction: rtl; text-align: right; }
+    .invest-person-label { font-family: 'Exo 2', sans-serif; font-size: 9px; letter-spacing: 0.3em; color: #C8C8D0; margin-bottom: 10px; display: block; }
+    .invest-person-name { font-family: 'BRoya', sans-serif; font-size: 15px; font-weight: 700; color: #1A1A2E; margin-bottom: 4px; }
+    .invest-person-title { font-family: 'BRoya', sans-serif; font-size: 12px; color: #8A8A96; margin-bottom: 10px; }
+    .invest-person-phone { display: flex; align-items: center; gap: 8px; direction: ltr; justify-content: flex-end; margin-bottom: 8px; }
+    .invest-person-phone span { font-family: 'Exo 2', sans-serif; font-size: 13px; color: #1A1A2E; font-weight: 600; }
+    .invest-person-email { display: flex; align-items: center; gap: 8px; direction: ltr; justify-content: flex-end; }
+    .invest-person-email a { font-family: 'Exo 2', sans-serif; font-size: 12px; color: #1A1A2E; font-weight: 600; text-decoration: none; border-bottom: 1px solid #C8C8D0; }
+    .invest-person-email a:hover { color: rgba(80,120,200,0.8); border-color: rgba(80,120,200,0.8); }
+    .phone-icon, .email-icon { font-size: 14px; }
+    .social-links { display: flex; flex-direction: row; gap: 16px; align-items: center; justify-content: center; padding: 8px 0; }
+    .social-link { display: flex; align-items: center; gap: 12px; text-decoration: none; color: #1A1A2E; padding: 12px 24px; border: 1px solid rgba(200,200,208,0.8); background: rgba(255,255,255,0.6); transition: all 0.15s; }
+    .social-link:hover { background: #1A1A2E; color: white; }
+    .social-link:hover .social-handle { color: white; }
+    .social-icon { width: 28px; height: 28px; flex-shrink: 0; }
+    .social-handle { font-family: 'Exo 2', sans-serif; font-size: 14px; font-weight: 600; color: #1A1A2E; letter-spacing: 0.05em; }
+    .anim-studio h2 { font-family: 'Exo 2', sans-serif; font-size: 42px; font-weight: 700; letter-spacing: 0.3em; color: #1A1A2E; margin-bottom: 6px; }
+    .anim-studio .sub { font-family: 'BRoya', sans-serif; color: #4A4A5A; font-size: 17px; line-height: 2; }
+    .anim-about h2 { font-family: 'BRoya', sans-serif; font-size: 42px; color: #1A1A2E; margin-bottom: 20px; text-align: center; }
+    .about-para { font-family: 'BRoya', sans-serif; font-size: 16px; color: #4A4A5A; line-height: 2.4; text-align: center; direction: rtl; max-width: 680px; margin: 0 auto 24px; }
+    .mgmt-label { font-family: 'Exo 2', sans-serif; font-size: 9px; letter-spacing: 0.4em; color: #8A8A96; display: block; margin-bottom: 14px; }
+    .mgmt-grid { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .mgmt-card { background: rgba(255,255,255,0.6); border: 1px solid rgba(200,200,208,0.5); padding: 14px 20px; text-align: center; min-width: 140px; }
+    .mgmt-role { font-family: 'Exo 2', sans-serif; font-size: 9px; letter-spacing: 0.3em; color: #C8C8D0; margin-bottom: 8px; display: block; }
+    .mgmt-name { font-family: 'BRoya', sans-serif; font-size: 14px; font-weight: 700; color: #1A1A2E; margin-bottom: 4px; }
+    .mgmt-title { font-family: 'BRoya', sans-serif; font-size: 12px; color: #8A8A96; }
+    .anim-contact h2 { font-family: 'Exo 2', sans-serif; font-size: 42px; font-weight: 700; letter-spacing: 0.3em; color: #1A1A2E; margin-bottom: 6px; }
+    .anim-contact .sub { font-family: 'BRoya', sans-serif; color: #8A8A96; font-size: 15px; margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+<div id="canvas-container"></div>
+<nav>
+  <div class="logo" onclick="goSection('home')">EEDEDAR</div>
+  <div class="nav-links">
+    <button class="nav-btn" id="btn-studio" onclick="goSection('studio')">STUDIO</button>
+    <button class="nav-btn" id="btn-productions" onclick="goSection('productions')">PRODUCTIONS</button>
+    <button class="nav-btn" id="btn-about" onclick="goSection('about')">ABOUT</button>
+  </div>
+  <button class="contact-btn" onclick="goSection('contact')">CONTACT</button>
+</nav>
+<div id="tagline">آینده سینما اینجا ساخته می‌شود</div>
+<div id="title">EEDEDAR</div>
+<div id="content">
+  <div class="lcd-screen" id="lcd-screen">
+    <div class="lcd-corner tl"></div><div class="lcd-corner tr"></div>
+    <div class="lcd-corner bl"></div><div class="lcd-corner br"></div>
+    <div class="lcd-statusbar"><span>EEDEDAR.SYS</span><div class="lcd-dot"></div><span id="lcd-time">00:00:00</span></div>
+    <div class="lcd-inner" id="content-inner"></div>
+  </div>
+</div>
+<script>
+function updateClock(){var n=new Date(),t=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0')+':'+n.getSeconds().toString().padStart(2,'0');var e=document.getElementById('lcd-time');if(e)e.textContent=t;}
+setInterval(updateClock,1000);updateClock();
+var blinkInterval=null;
+function startBlink(){stopBlink();var isLit=false;function tick(){var btn=document.querySelector('.earthos-link');if(!btn)return;isLit=!isLit;if(isLit){btn.classList.add('lit');}else{btn.classList.remove('lit');}blinkInterval=setTimeout(tick,1000);}blinkInterval=setTimeout(tick,1000);}
+function stopBlink(){if(blinkInterval){clearTimeout(blinkInterval);blinkInterval=null;}var btn=document.querySelector('.earthos-link');if(btn)btn.classList.remove('lit');}
+function submitForm(t){var n=document.getElementById(t+'-name').value,c=document.getElementById(t+'-company').value,p=document.getElementById(t+'-phone').value,e=document.getElementById(t+'-email').value;if(!n||!e){alert('لطفاً نام و ایمیل را وارد کنید');return;}fetch('https://formspree.io/f/mwvjregd',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:n,company:c,phone:p,email:e,type:t})}).then(function(r){if(r.ok){document.getElementById(t+'-form-fields').style.display='none';document.getElementById(t+'-success').style.display='block';}else{alert('خطا در ارسال');}}).catch(function(){alert('خطا در ارسال');});}
+function buildFormHTML(t){return '<div class="invest-layout"><div class="invest-form-side"><div id="'+t+'-form-fields"><div class="invest-form"><input type="text" id="'+t+'-name" placeholder="نام"><input type="text" id="'+t+'-company" placeholder="شرکت"><input type="text" id="'+t+'-phone" placeholder="شماره تماس"><input type="email" id="'+t+'-email" placeholder="ایمیل"><button class="invest-submit" onclick="submitForm(\''+t+'\')">ارسال</button></div></div><div class="invest-success" id="'+t+'-success">پیام شما با موفقیت ارسال شد.</div></div><div class="invest-person-side"><span class="invest-person-label">MARKETING HEAD</span><div class="invest-person-name">دکتر لیلا پاکزاد</div><div class="invest-person-title">مدیر مارکتینگ</div><div class="invest-person-phone"><span>+989306144119</span><span class="phone-icon">📞</span></div><div class="invest-person-email"><a href="mailto:marketing@eededar.com">marketing@eededar.com</a><span class="email-icon">✉️</span></div></div></div>';}
+var contactDetails={
+  creative:'<p>ایده و پروژه و یا نمونه کار خود را به آدرس <a href="mailto:eededar@gmail.com">eededar@gmail.com</a> ارسال کنید.</p>',
+  invest:buildFormHTML('invest'),
+  order:buildFormHTML('order'),
+  social:'<div class="social-links"><a class="social-link" href="https://instagram.com/eede.dar" target="_blank"><svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="#1A1A2E" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#1A1A2E" stroke="none"/></svg><span class="social-handle">@eede.dar</span></a><a class="social-link" href="https://youtube.com/@eededar" target="_blank"><svg class="social-icon" viewBox="0 0 24 24" fill="#1A1A2E"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.4 2.8 12 2.8 12 2.8s-4.4 0-6.8.2c-.6.1-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.5 21.6 12 21.7 12 21.7s4.4 0 6.8-.3c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg><span class="social-handle">@eededar</span></a></div>'
+};
+function showContactDetail(type){document.querySelectorAll('.contact-item').forEach(function(el){el.classList.remove('active');});document.getElementById('contact-item-'+type).classList.add('active');var detail=document.getElementById('contact-detail-box');if(contactDetails[type]){detail.innerHTML=contactDetails[type];detail.style.display='block';}else{detail.style.display='none';}}
+const contents={
+studio:'<div class="anim-studio"><span class="label">WHAT WE DO</span><h2>STUDIO</h2><p class="sub">ایده‌دار یک استودیوی خلاق مبتنی بر هوش مصنوعی است</p><div class="services-grid"><div class="service-item"><div class="service-en">AI FILMMAKING</div><div class="service-fa">ساخت فیلم هوشمند</div></div><div class="service-item"><div class="service-en">WORLD BUILDING</div><div class="service-fa">دنیاسازی</div></div><div class="service-item"><div class="service-en">VISUAL DEVELOPMENT</div><div class="service-fa">توسعه بصری</div></div><div class="service-item"><div class="service-en">ADVERTISEMENT VIDEO</div><div class="service-fa">ویدیوی تبلیغاتی</div></div><div class="service-item"><div class="service-en">SOUND & MUSIC DESIGN</div><div class="service-fa">طراحی صدا و موسیقی</div></div><div class="service-item"><div class="service-en">CHARACTER DESIGN</div><div class="service-fa">طراحی شخصیت</div></div></div></div>',
+productions:'<div class="anim-productions"><span class="label">CURRENT PROJECT</span><div class="status-badge">IN PRODUCTION</div><span class="earthos-title">EARTHOS</span><p>یک جهان علمی‌تخیلی، تمدن‌های پیشرفته، فرهنگ‌های سیاره‌ای و آینده بشریت در میان ستارگان</p><a class="earthos-link" href="http://earthos.ir" target="_blank">ENTER EARTHOS</a></div>',
+about:'<div class="anim-about"><span class="label">WHO WE ARE</span><h2>ایده‌دار</h2><p class="about-para">ایده‌دار یک استودیوی فیلم مستقل مبتنی بر هوش مصنوعی است که بر خلق جهان‌های سینمایی ، روایت بصری ممتاز و توسعه آثار علمی‌تخیلی نسل بعد تمرکز دارد. این استودیو با ترکیب فیلمسازان، هنرمندان، طراحان و جریان‌های تولید پیشرفته هوش مصنوعی، پروژه‌های بلند پروازانه‌ای را برای مخاطبان جهانی توسعه می‌دهد.</p><span class="mgmt-label">MANAGEMENT</span><div class="mgmt-grid"><div class="mgmt-card"><span class="mgmt-role">C.E.O</span><div class="mgmt-name">شادی بهتاش</div><div class="mgmt-title">مدیر عامل</div></div><div class="mgmt-card"><span class="mgmt-role">MARKETING HEAD</span><div class="mgmt-name">لیلا پاکزاد</div><div class="mgmt-title">مدیر مارکتینگ</div></div><div class="mgmt-card"><span class="mgmt-role">ART DIRECTOR</span><div class="mgmt-name">کاوه سجادی حسینی</div><div class="mgmt-title">مدیر هنری</div></div><div class="mgmt-card"><span class="mgmt-role">MEMBER OF BOARD</span><div class="mgmt-name">امیر کفایتی</div><div class="mgmt-title">هیئت مدیره</div></div></div></div>',
+contact:'<div class="anim-contact"><span class="label">GET IN TOUCH</span><h2>CONTACT</h2><p class="sub">مسیر خود را انتخاب کنید</p><div class="contact-grid"><div class="contact-item" id="contact-item-creative" onclick="showContactDetail(\'creative\')"><div class="contact-item-title">همکاری خلاق</div><div class="contact-item-desc">فیلمساز، طراح، نویسنده</div></div><div class="contact-item" id="contact-item-invest" onclick="showContactDetail(\'invest\')"><div class="contact-item-title">سرمایه‌گذاری</div><div class="contact-item-desc">مشارکت تجاری</div></div><div class="contact-item" id="contact-item-order" onclick="showContactDetail(\'order\')"><div class="contact-item-title">سفارش سرویس</div><div class="contact-item-desc">تبلیغات، صدا، ویدیو</div></div><div class="contact-item" id="contact-item-social" onclick="showContactDetail(\'social\')"><div class="contact-item-title">شبکه‌های اجتماعی</div><div class="contact-item-desc">ما را دنبال کنید</div></div></div><div class="contact-detail" id="contact-detail-box" style="display:none;"></div></div>'
+};
+const container=document.getElementById('canvas-container');
+const scene=new THREE.Scene();scene.background=new THREE.Color(0xF0F0F2);
+const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);camera.position.z=7;
+const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setSize(window.innerWidth,window.innerHeight);renderer.setPixelRatio(window.devicePixelRatio);container.appendChild(renderer.domElement);
+const pCanvas=document.createElement('canvas');pCanvas.width=64;pCanvas.height=64;const pCtx=pCanvas.getContext('2d');const grad=pCtx.createRadialGradient(32,32,0,32,32,32);grad.addColorStop(0,'rgba(60,60,80,1)');grad.addColorStop(0.3,'rgba(60,60,80,0.6)');grad.addColorStop(0.7,'rgba(60,60,80,0.1)');grad.addColorStop(1,'rgba(60,60,80,0)');pCtx.fillStyle=grad;pCtx.beginPath();pCtx.arc(32,32,32,0,Math.PI*2);pCtx.fill();const particleTexture=new THREE.CanvasTexture(pCanvas);
+const waveWidth=80,waveDepth=80,waveGeo=new THREE.BufferGeometry(),wavePos=new Float32Array(waveWidth*waveDepth*3);for(let i=0;i<waveWidth;i++)for(let j=0;j<waveDepth;j++){const idx=(i*waveDepth+j)*3;wavePos[idx]=(i-waveWidth/2)*0.4;wavePos[idx+1]=0;wavePos[idx+2]=(j-waveDepth/2)*0.4-2;}waveGeo.setAttribute('position',new THREE.BufferAttribute(wavePos,3));scene.add(new THREE.Points(waveGeo,new THREE.PointsMaterial({color:0x4A4A5A,size:0.18,transparent:true,opacity:0.6,map:particleTexture,alphaTest:0.01,depthWrite:false})));
+const loader=new THREE.TextureLoader();
+const NUM=28;
+const textures=Array.from({length:NUM},function(_,i){return loader.load('images/'+(i+1)+'.jpg');});
+const group=new THREE.Group();scene.add(group);
+const sphereRadius=2.2,cubeSize=0.7,gap=0.02,step=cubeSize+gap,gridSize=7,half=(gridSize-1)/2;
+const cubes=[],homePositions=[],targetPositions=[];
+function getTexIdx(x,y,z,face){var hash=(x*7+y*13+z*17+face*5+x*y*3+y*z*11+x*z*7)%NUM;return (hash+NUM)%NUM;}
+for(let x=0;x<gridSize;x++)for(let y=0;y<gridSize;y++)for(let z=0;z<gridSize;z++){
+  const px=(x-half)*step,py=(y-half)*step,pz=(z-half)*step;
+  if(Math.sqrt(px*px+py*py+pz*pz)>sphereRadius)continue;
+  const geo=new THREE.BoxGeometry(cubeSize,cubeSize,cubeSize);
+  const mat=[
+    new THREE.MeshBasicMaterial({map:textures[getTexIdx(x,y,z,0)]}),
+    new THREE.MeshBasicMaterial({map:textures[getTexIdx(x,y,z,1)]}),
+    new THREE.MeshBasicMaterial({map:textures[getTexIdx(x,y,z,2)]}),
+    new THREE.MeshBasicMaterial({map:textures[getTexIdx(x,y,z,3)]}),
+    new THREE.MeshBasicMaterial({map:textures[getTexIdx(x,y,z,4)]}),
+    new THREE.MeshBasicMaterial({map:textures[getTexIdx(x,y,z,5)]})
+  ];
+  const cube=new THREE.Mesh(geo,mat);
+  cube.position.set(px,py,pz);
+  group.add(cube);cubes.push(cube);
+  homePositions.push(new THREE.Vector3(px,py,pz));
+  targetPositions.push(new THREE.Vector3(px,py,pz));
+  const edges=new THREE.LineSegments(new THREE.EdgesGeometry(geo),new THREE.LineBasicMaterial({color:0xAAAAAA,transparent:true,opacity:0.3}));
+  edges.position.set(px,py,pz);group.add(edges);
+}
+scene.add(new THREE.AmbientLight(0xffffff,1.5));const d1=new THREE.DirectionalLight(0xffffff,2.5);d1.position.set(5,5,5);scene.add(d1);const d2=new THREE.DirectionalLight(0xffffff,1);d2.position.set(-5,-3,-5);scene.add(d2);const d3=new THREE.DirectionalLight(0xffffff,0.8);d3.position.set(0,10,0);scene.add(d3);
+let currentSection='home',mouseX=0,mouseY=0,time=0;
+document.addEventListener('mousemove',function(e){mouseX=(e.clientX/window.innerWidth-0.5)*0.6;mouseY=(e.clientY/window.innerHeight-0.5)*0.6;});
+function showContent(section){const content=document.getElementById('content');const lcd=document.getElementById('lcd-screen');document.getElementById('content-inner').innerHTML=contents[section]||'';content.classList.add('visible');lcd.classList.remove('poweron','poweroff');void lcd.offsetWidth;lcd.classList.add('poweron');setTimeout(function(){content.classList.add('shown');if(section==='productions')startBlink();},50);}
+function hideContent(){stopBlink();const content=document.getElementById('content');const lcd=document.getElementById('lcd-screen');content.classList.remove('shown');lcd.classList.remove('poweron');lcd.classList.add('poweroff');setTimeout(function(){content.classList.remove('visible');lcd.classList.remove('poweroff');},300);}
+function goSection(section){currentSection=section;document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active');});const btn=document.getElementById('btn-'+section);if(btn)btn.classList.add('active');document.getElementById('tagline').style.display=section==='home'?'block':'none';document.getElementById('title').style.display=section==='home'?'block':'none';hideContent();setTimeout(function(){if(section==='home'){cubes.forEach(function(c,i){c.scale.set(1,1,1);targetPositions[i].copy(homePositions[i]);});return;}cubes.forEach(function(_,i){const dir=homePositions[i].clone().normalize();if(section==='studio'){targetPositions[i].set(dir.x*(4+Math.random()*3),dir.y*(4+Math.random()*3),dir.z*(4+Math.random()*3));setTimeout(function(){showContent('studio');},600);}if(section==='productions'){const angle=(i/cubes.length)*Math.PI*2;targetPositions[i].set(Math.cos(angle)*(4+Math.random()),(Math.random()-0.5)*2,Math.sin(angle)*(4+Math.random()));setTimeout(function(){showContent('productions');},600);}if(section==='about'){targetPositions[i].set(dir.x*(5+Math.random()*4),dir.y*(5+Math.random()*4),-4-Math.random()*4);setTimeout(function(){showContent('about');},800);}if(section==='contact'){targetPositions[i].set(dir.x*(5+Math.random()*3),dir.y*(5+Math.random()*3),(Math.random()-0.5)*6);setTimeout(function(){showContent('contact');},600);}});},350);}
+function animate(){requestAnimationFrame(animate);time+=0.015;cubes.forEach(function(cube,i){cube.position.lerp(targetPositions[i],0.08);});const positions=waveGeo.getAttribute('position');for(let i=0;i<waveWidth;i++)for(let j=0;j<waveDepth;j++){const idx=i*waveDepth+j;positions.setY(idx,Math.sin(positions.getX(idx)*0.8+time)*0.3+Math.cos(positions.getZ(idx)*0.6+time*0.8)*0.2);}positions.needsUpdate=true;if(currentSection==='home'){group.rotation.x+=0.002;group.rotation.y+=0.004;}else{group.rotation.x*=0.95;group.rotation.y*=0.95;}camera.position.x+=(mouseX-camera.position.x)*0.04;camera.position.y+=(-mouseY-camera.position.y)*0.04;camera.lookAt(scene.position);renderer.render(scene,camera);}
+animate();
+window.addEventListener('resize',function(){camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth,window.innerHeight);});
+</script>
+</body>
+</html>
