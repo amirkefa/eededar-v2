@@ -35,15 +35,11 @@
     #canvas-container { position: fixed; inset: 0; z-index: 0; }
     nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; background: rgba(255,255,255,0.7); backdrop-filter: blur(12px); border-bottom: 1px solid #E8E8ED; }
     .logo { font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 0.2em; color: #1A1A2E; cursor: pointer; }
-    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links { display: flex; gap: 32px; }
     .nav-btn { background: none; border: none; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; letter-spacing: 0.2em; color: #8A8A96; transition: color 0.15s; }
     .nav-btn:hover, .nav-btn.active { color: #1A1A2E; font-weight: 700; }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
     .contact-btn { background: none; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; letter-spacing: 0.2em; color: #1A1A2E; border: 1px solid #1A1A2E; padding: 8px 24px; transition: all 0.15s; }
     .contact-btn:hover { background: #1A1A2E; color: white; }
-    .lang-toggle { display: flex; border: 1px solid #C8C8D0; border-radius: 4px; overflow: hidden; }
-    .lang-btn { background: none; border: none; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 11px; letter-spacing: 0.15em; color: #8A8A96; padding: 6px 10px; transition: all 0.15s; }
-    .lang-btn.active { background: #1A1A2E; color: white; }
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
     .hamburger span { display: block; width: 24px; height: 2px; background: #1A1A2E; transition: all 0.3s; }
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -54,10 +50,7 @@
     .mobile-menu-btn { background: none; border: none; cursor: pointer; font-family: 'Exo 2', sans-serif; font-size: 13px; letter-spacing: 0.2em; color: #8A8A96; padding: 12px 0; text-align: left; transition: color 0.15s; border-bottom: 1px solid #F0F0F2; }
     .mobile-menu-btn:last-child { border-bottom: none; }
     .mobile-menu-btn:hover, .mobile-menu-btn.active { color: #1A1A2E; font-weight: 700; }
-    .mobile-lang-toggle { display: flex; gap: 8px; padding: 12px 0 4px; }
-    .mobile-lang-toggle .lang-btn { border: 1px solid #C8C8D0; border-radius: 4px; }
     #tagline { position: fixed; top: 120px; left: 0; right: 0; text-align: center; z-index: 10; font-family: 'BRoya', sans-serif; font-size: 15px; color: #8A8A96; pointer-events: none; }
-    body.lang-en #tagline { font-family: 'Exo 2', sans-serif; }
     #title { position: fixed; bottom: 80px; left: 0; right: 0; text-align: center; z-index: 10; font-family: 'Exo 2', sans-serif; font-size: 48px; font-weight: 700; letter-spacing: 0.3em; color: #1A1A2E; pointer-events: none; }
     #content { position: fixed; inset: 0; z-index: 10; display: none; align-items: center; justify-content: center; pointer-events: none; opacity: 0; transition: opacity 0.4s ease; }
     #content.visible { display: flex; }
@@ -86,15 +79,12 @@
     .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(200,200,208,0.5); max-width: 720px; margin: 24px auto 0; pointer-events: all; }
     .service-item { background: rgba(255,255,255,0.6); padding: 16px 12px; text-align: center; transition: background 0.15s; }
     .service-item:hover { background: rgba(255,255,255,0.9); }
-    .service-caption { font-family: 'Exo 2', sans-serif; font-size: 11px; letter-spacing: 0.3em; color: #8A8A96; margin-bottom: 6px; }
-    .service-title { font-family: 'BRoya', sans-serif; font-size: 16px; color: #1A1A2E; }
-    body.lang-en .service-caption { font-family: 'BRoya', sans-serif; }
-    body.lang-en .service-title { font-family: 'Exo 2', sans-serif; }
+    .service-en { font-family: 'Exo 2', sans-serif; font-size: 11px; letter-spacing: 0.3em; color: #8A8A96; margin-bottom: 6px; }
+    .service-fa { font-family: 'BRoya', sans-serif; font-size: 16px; color: #1A1A2E; }
     .earthos-title { display: block; font-family: 'Exo 2', sans-serif; font-size: 68px; font-weight: 900; letter-spacing: 0.4em; background: linear-gradient(105deg, #555 0%, #999 20%, #fff 40%, #bbb 55%, #fff 70%, #777 85%, #444 100%); background-size: 300% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: metalShine 2.5s linear infinite; margin-bottom: 12px; }
     @keyframes metalShine { 0% { background-position: 0% center; } 100% { background-position: 300% center; } }
     .status-badge { font-family: 'Exo 2', sans-serif; display: inline-block; font-size: 10px; letter-spacing: 0.3em; color: #8A8A96; border: 1px solid #C8C8D0; padding: 4px 12px; margin-bottom: 16px; }
     .anim-productions p { font-family: 'BRoya', sans-serif; color: #4A4A5A; max-width: 400px; margin: 0 auto; line-height: 2; font-size: 15px; }
-    body.lang-en .anim-productions p { font-family: 'Exo 2', sans-serif; max-width: 460px; }
     .earthos-link { display: inline-block; margin-top: 20px; border: 1px solid #1A1A2E; color: #1A1A2E; padding: 10px 28px; font-size: 13px; letter-spacing: 0.2em; pointer-events: all; cursor: pointer; text-decoration: none; font-family: 'Exo 2', sans-serif; transition: background 0.1s, color 0.1s; }
     .earthos-link:hover { background: #1A1A2E !important; color: white !important; }
     .earthos-link.lit { background: #1A1A2E; color: white; }
@@ -105,10 +95,8 @@
     .contact-item.active .contact-item-title, .contact-item.active .contact-item-desc { color: white; }
     .contact-item-title { font-family: 'BRoya', sans-serif; font-size: 17px; color: #1A1A2E; margin-bottom: 6px; }
     .contact-item-desc { font-family: 'BRoya', sans-serif; font-size: 13px; color: #8A8A96; line-height: 1.8; }
-    body.lang-en .contact-item-title, body.lang-en .contact-item-desc { font-family: 'Exo 2', sans-serif; }
     .contact-detail { margin-top: 20px; padding: 16px 20px; background: rgba(255,255,255,0.5); border: 1px solid rgba(200,200,208,0.5); animation: fadeInUp 0.4s ease forwards; pointer-events: all; }
     .contact-detail p { font-family: 'BRoya', sans-serif; font-size: 16px; color: #4A4A5A; line-height: 2.2; direction: rtl; text-align: center; }
-    body.lang-en .contact-detail p { font-family: 'Exo 2', sans-serif; direction: ltr; }
     .contact-detail a { color: #1A1A2E; font-weight: 700; text-decoration: none; border-bottom: 1px solid #1A1A2E; }
     .contact-detail a:hover { color: rgba(80,120,200,0.8); border-color: rgba(80,120,200,0.8); }
     @keyframes fadeInUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
@@ -116,25 +104,18 @@
     .invest-form-side { flex: 1; }
     .invest-form-side .invest-form { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; pointer-events: all; }
     .invest-form-side input { font-family: 'BRoya', sans-serif; font-size: 13px; padding: 8px 10px; border: 1px solid rgba(200,200,208,0.8); background: rgba(255,255,255,0.8); color: #1A1A2E; direction: rtl; outline: none; transition: border 0.15s; width: 100%; }
-    body.lang-en .invest-form-side input { font-family: 'Exo 2', sans-serif; direction: ltr; text-align: left; }
     .invest-form-side input:focus { border-color: rgba(80,120,200,0.5); }
     .invest-form-side input::placeholder { color: #C8C8D0; }
     .invest-submit { grid-column: 1 / -1; margin-top: 4px; background: #1A1A2E; color: white; border: none; cursor: pointer; font-family: 'BRoya', sans-serif; font-size: 14px; padding: 10px; transition: background 0.15s; pointer-events: all; width: 100%; }
-    body.lang-en .invest-submit { font-family: 'Exo 2', sans-serif; letter-spacing: 0.1em; }
     .invest-submit:hover { background: rgba(80,120,200,0.9); }
     .invest-success { font-family: 'BRoya', sans-serif; font-size: 15px; color: rgba(80,200,120,0.9); margin-top: 10px; display: none; direction: rtl; text-align: right; }
-    body.lang-en .invest-success { font-family: 'Exo 2', sans-serif; direction: ltr; text-align: left; }
     .invest-person-side { width: 200px; flex-shrink: 0; background: rgba(255,255,255,0.6); border: 1px solid rgba(200,200,208,0.5); padding: 16px; direction: rtl; text-align: right; }
-    body.lang-en .invest-person-side { direction: ltr; text-align: left; }
     .invest-person-label { font-family: 'Exo 2', sans-serif; font-size: 9px; letter-spacing: 0.3em; color: #C8C8D0; margin-bottom: 10px; display: block; }
     .invest-person-name { font-family: 'BRoya', sans-serif; font-size: 15px; font-weight: 700; color: #1A1A2E; margin-bottom: 4px; }
     .invest-person-title { font-family: 'BRoya', sans-serif; font-size: 12px; color: #8A8A96; margin-bottom: 10px; }
-    body.lang-en .invest-person-name, body.lang-en .invest-person-title { font-family: 'Exo 2', sans-serif; }
     .invest-person-phone { display: flex; align-items: center; gap: 8px; direction: ltr; justify-content: flex-end; margin-bottom: 8px; }
-    body.lang-en .invest-person-phone { justify-content: flex-start; }
     .invest-person-phone span { font-family: 'Exo 2', sans-serif; font-size: 13px; color: #1A1A2E; font-weight: 600; }
     .invest-person-email { display: flex; align-items: center; gap: 8px; direction: ltr; justify-content: flex-end; }
-    body.lang-en .invest-person-email { justify-content: flex-start; }
     .invest-person-email a { font-family: 'Exo 2', sans-serif; font-size: 12px; color: #1A1A2E; font-weight: 600; text-decoration: none; border-bottom: 1px solid #C8C8D0; }
     .invest-person-email a:hover { color: rgba(80,120,200,0.8); border-color: rgba(80,120,200,0.8); }
     .phone-icon, .email-icon { font-size: 14px; }
@@ -146,21 +127,16 @@
     .social-handle { font-family: 'Exo 2', sans-serif; font-size: 14px; font-weight: 600; color: #1A1A2E; letter-spacing: 0.05em; }
     .anim-studio h2 { font-family: 'Exo 2', sans-serif; font-size: 42px; font-weight: 700; letter-spacing: 0.3em; color: #1A1A2E; margin-bottom: 6px; }
     .anim-studio .sub { font-family: 'BRoya', sans-serif; color: #4A4A5A; font-size: 17px; line-height: 2; }
-    body.lang-en .anim-studio .sub { font-family: 'Exo 2', sans-serif; }
     .anim-about h2 { font-family: 'BRoya', sans-serif; font-size: 42px; color: #1A1A2E; margin-bottom: 20px; text-align: center; }
-    body.lang-en .anim-about h2 { font-family: 'Exo 2', sans-serif; font-weight: 700; letter-spacing: 0.1em; }
     .about-para { font-family: 'BRoya', sans-serif; font-size: 16px; color: #4A4A5A; line-height: 2.4; text-align: center; direction: rtl; max-width: 680px; margin: 0 auto 24px; }
-    body.lang-en .about-para { font-family: 'Exo 2', sans-serif; direction: ltr; }
     .mgmt-label { font-family: 'Exo 2', sans-serif; font-size: 9px; letter-spacing: 0.4em; color: #8A8A96; display: block; margin-bottom: 14px; }
     .mgmt-grid { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
     .mgmt-card { background: rgba(255,255,255,0.6); border: 1px solid rgba(200,200,208,0.5); padding: 14px 20px; text-align: center; min-width: 140px; }
     .mgmt-role { font-family: 'Exo 2', sans-serif; font-size: 9px; letter-spacing: 0.3em; color: #C8C8D0; margin-bottom: 8px; display: block; }
     .mgmt-name { font-family: 'BRoya', sans-serif; font-size: 14px; font-weight: 700; color: #1A1A2E; margin-bottom: 4px; }
     .mgmt-title { font-family: 'BRoya', sans-serif; font-size: 12px; color: #8A8A96; }
-    body.lang-en .mgmt-name, body.lang-en .mgmt-title { font-family: 'Exo 2', sans-serif; }
     .anim-contact h2 { font-family: 'Exo 2', sans-serif; font-size: 42px; font-weight: 700; letter-spacing: 0.3em; color: #1A1A2E; margin-bottom: 6px; }
     .anim-contact .sub { font-family: 'BRoya', sans-serif; color: #8A8A96; font-size: 15px; margin-bottom: 4px; }
-    body.lang-en .anim-contact .sub { font-family: 'Exo 2', sans-serif; }
     @media (max-width: 640px) {
       .nav-links { display: none; }
       .contact-btn { display: none; }
@@ -170,8 +146,8 @@
       .anim-studio h2 { font-size: 28px; }
       .anim-studio .sub { font-size: 14px; }
       .services-grid { grid-template-columns: repeat(2, 1fr); max-width: 100%; }
-      .service-caption { font-size: 9px; letter-spacing: 0.1em; }
-      .service-title { font-size: 13px; }
+      .service-en { font-size: 9px; letter-spacing: 0.1em; }
+      .service-fa { font-size: 13px; }
       .earthos-title { font-size: 36px; letter-spacing: 0.2em; }
       .anim-productions p { font-size: 13px; }
       .anim-about h2 { font-size: 28px; }
@@ -201,13 +177,7 @@
     <button class="nav-btn" id="btn-productions" onclick="goSection('productions')">PRODUCTIONS</button>
     <button class="nav-btn" id="btn-about" onclick="goSection('about')">ABOUT</button>
   </div>
-  <div class="nav-right">
-    <div class="lang-toggle">
-      <button class="lang-btn" id="lang-btn-fa" onclick="setLanguage('fa', true)">FA</button>
-      <button class="lang-btn" id="lang-btn-en" onclick="setLanguage('en', true)">EN</button>
-    </div>
-    <button class="contact-btn" onclick="goSection('contact')">CONTACT</button>
-  </div>
+  <button class="contact-btn" onclick="goSection('contact')">CONTACT</button>
   <button class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </button>
@@ -217,10 +187,6 @@
   <button class="mobile-menu-btn" id="mbtn-productions" onclick="goSection('productions');toggleMenu()">PRODUCTIONS</button>
   <button class="mobile-menu-btn" id="mbtn-about" onclick="goSection('about');toggleMenu()">ABOUT</button>
   <button class="mobile-menu-btn" id="mbtn-contact" onclick="goSection('contact');toggleMenu()">CONTACT</button>
-  <div class="mobile-lang-toggle">
-    <button class="lang-btn" id="mlang-btn-fa" onclick="setLanguage('fa', true)">FA</button>
-    <button class="lang-btn" id="mlang-btn-en" onclick="setLanguage('en', true)">EN</button>
-  </div>
 </div>
 <div id="tagline">آینده سینما اینجا ساخته می‌شود</div>
 <div id="title">EEDEDAR</div>
@@ -239,160 +205,21 @@ setInterval(updateClock,1000);updateClock();
 var blinkInterval=null;
 function startBlink(){stopBlink();var isLit=false;function tick(){var btn=document.querySelector('.earthos-link');if(!btn)return;isLit=!isLit;if(isLit){btn.classList.add('lit');}else{btn.classList.remove('lit');}blinkInterval=setTimeout(tick,1000);}blinkInterval=setTimeout(tick,1000);}
 function stopBlink(){if(blinkInterval){clearTimeout(blinkInterval);blinkInterval=null;}var btn=document.querySelector('.earthos-link');if(btn)btn.classList.remove('lit');}
-
-/* ============== LANGUAGE / TRANSLATION DATA ============== */
-var TAGLINE = { fa: 'آینده سینما اینجا ساخته می\u200cشود', en: 'The future of cinema is here.' };
-var PAGE_TITLE = { fa: 'ایده\u200cدار | استودیوی فیلم هوش مصنوعی', en: 'EEDEDAR | AI Film Studio' };
-
-var FORM_TEXT = {
-  fa: { name:'نام', company:'شرکت', phone:'شماره تماس', email:'ایمیل', submit:'ارسال', success:'پیام شما با موفقیت ارسال شد.', missing:'لطفاً نام و ایمیل را وارد کنید', error:'خطا در ارسال' },
-  en: { name:'Name', company:'Company', phone:'Phone Number', email:'Email', submit:'Submit', success:'Your message has been sent successfully.', missing:'Please enter your name and email.', error:'Something went wrong. Please try again.' }
+function submitForm(t){var n=document.getElementById(t+'-name').value,c=document.getElementById(t+'-company').value,p=document.getElementById(t+'-phone').value,e=document.getElementById(t+'-email').value;if(!n||!e){alert('لطفاً نام و ایمیل را وارد کنید');return;}fetch('https://formspree.io/f/mwvjregd',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:n,company:c,phone:p,email:e,type:t})}).then(function(r){if(r.ok){document.getElementById(t+'-form-fields').style.display='none';document.getElementById(t+'-success').style.display='block';}else{alert('خطا در ارسال');}}).catch(function(){alert('خطا در ارسال');});}
+function buildFormHTML(t){return '<div class="invest-layout"><div class="invest-form-side"><div id="'+t+'-form-fields"><div class="invest-form"><input type="text" id="'+t+'-name" placeholder="نام"><input type="text" id="'+t+'-company" placeholder="شرکت"><input type="text" id="'+t+'-phone" placeholder="شماره تماس"><input type="email" id="'+t+'-email" placeholder="ایمیل"><button class="invest-submit" onclick="submitForm(\''+t+'\')">ارسال</button></div></div><div class="invest-success" id="'+t+'-success">پیام شما با موفقیت ارسال شد.</div></div><div class="invest-person-side"><span class="invest-person-label">MARKETING HEAD</span><div class="invest-person-name">دکتر لیلا پاکزاد</div><div class="invest-person-title">مدیر مارکتینگ</div><div class="invest-person-phone"><span>+989306144119</span><span class="phone-icon">📞</span></div><div class="invest-person-email"><a href="mailto:eededar@gmail.com">eededar@gmail.com</a><span class="email-icon">✉️</span></div></div></div>';}
+var contactDetails={
+  creative:'<p>ایده و پروژه و یا نمونه کار خود را به آدرس <a href="mailto:eededar@gmail.com">eededar@gmail.com</a> ارسال کنید.</p>',
+  invest:buildFormHTML('invest'),
+  order:buildFormHTML('order'),
+  social:'<div class="social-links"><a class="social-link" href="https://instagram.com/eede.dar" target="_blank"><svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="#1A1A2E" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#1A1A2E" stroke="none"/></svg><span class="social-handle">@eede.dar</span></a><a class="social-link" href="https://youtube.com/@eededar" target="_blank"><svg class="social-icon" viewBox="0 0 24 24" fill="#1A1A2E"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.4 2.8 12 2.8 12 2.8s-4.4 0-6.8.2c-.6.1-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.5 21.6 12 21.7 12 21.7s4.4 0 6.8-.3c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg><span class="social-handle">@eededar</span></a></div>'
 };
-
-var SERVICES = [
-  { en:'AI FILMMAKING', fa:'ساخت فیلم هوشمند' },
-  { en:'WORLD BUILDING', fa:'دنیاسازی' },
-  { en:'VISUAL DEVELOPMENT', fa:'توسعه بصری' },
-  { en:'ADVERTISEMENT VIDEO', fa:'ویدیوی تبلیغاتی' },
-  { en:'SOUND & MUSIC DESIGN', fa:'طراحی صدا و موسیقی' },
-  { en:'CHARACTER DESIGN', fa:'طراحی شخصیت' }
-];
-
-var CONTACT_OPTIONS = [
-  { key:'creative', title:{fa:'همکاری خلاق', en:'Creative Collaboration'}, desc:{fa:'فیلمساز، طراح، نویسنده', en:'Filmmakers, designers, writers'} },
-  { key:'invest', title:{fa:'سرمایه\u200cگذاری', en:'Investment'}, desc:{fa:'مشارکت تجاری', en:'Business partnership'} },
-  { key:'order', title:{fa:'سفارش سرویس', en:'Order a Service'}, desc:{fa:'تبلیغات، صدا، ویدیو', en:'Advertising, sound, video'} },
-  { key:'social', title:{fa:'شبکه\u200cهای اجتماعی', en:'Social Media'}, desc:{fa:'ما را دنبال کنید', en:'Follow us'} }
-];
-
-var MGMT = [
-  { role:'C.E.O', name:{fa:'شادی بهتاش', en:'Shadi Behtash'}, title:{fa:'مدیر عامل', en:'Chief Executive Officer'} },
-  { role:'MARKETING HEAD', name:{fa:'لیلا پاکزاد', en:'Leila Pakzad'}, title:{fa:'مدیر مارکتینگ', en:'Head of Marketing'} },
-  { role:'ART DIRECTOR', name:{fa:'کاوه سجادی حسینی', en:'Kaveh Sajjadi Hosseini'}, title:{fa:'مدیر هنری', en:'Creative & Art Direction'} },
-  { role:'MEMBER OF BOARD', name:{fa:'امیر کفایتی', en:'Amir Kefayati'}, title:{fa:'هیئت مدیره', en:'Board Member'} }
-];
-
-var MARKETING_PERSON = {
-  fa: { name:'دکتر لیلا پاکزاد', title:'مدیر مارکتینگ' },
-  en: { name:'Dr. Leila Pakzad', title:'Head of Marketing' }
+function showContactDetail(type){document.querySelectorAll('.contact-item').forEach(function(el){el.classList.remove('active');});document.getElementById('contact-item-'+type).classList.add('active');var detail=document.getElementById('contact-detail-box');if(contactDetails[type]){detail.innerHTML=contactDetails[type];detail.style.display='block';}else{detail.style.display='none';}}
+const contents={
+studio:'<div class="anim-studio"><span class="label">WHAT WE DO</span><h2>STUDIO</h2><p class="sub">ایده‌دار یک استودیوی خلاق مبتنی بر هوش مصنوعی است</p><div class="services-grid"><div class="service-item"><div class="service-en">AI FILMMAKING</div><div class="service-fa">ساخت فیلم هوشمند</div></div><div class="service-item"><div class="service-en">WORLD BUILDING</div><div class="service-fa">دنیاسازی</div></div><div class="service-item"><div class="service-en">VISUAL DEVELOPMENT</div><div class="service-fa">توسعه بصری</div></div><div class="service-item"><div class="service-en">ADVERTISEMENT VIDEO</div><div class="service-fa">ویدیوی تبلیغاتی</div></div><div class="service-item"><div class="service-en">SOUND & MUSIC DESIGN</div><div class="service-fa">طراحی صدا و موسیقی</div></div><div class="service-item"><div class="service-en">CHARACTER DESIGN</div><div class="service-fa">طراحی شخصیت</div></div></div></div>',
+productions:'<div class="anim-productions"><span class="label">CURRENT PROJECT</span><div class="status-badge">IN PRODUCTION</div><span class="earthos-title">EARTHOS</span><p>یک جهان علمی‌تخیلی، تمدن‌های پیشرفته، فرهنگ‌های سیاره‌ای و آینده بشریت در میان ستارگان</p><a class="earthos-link" href="http://earthos.ir" target="_blank">ENTER EARTHOS</a></div>',
+about:'<div class="anim-about"><span class="label">WHO WE ARE</span><h2>ایده‌دار</h2><p class="about-para">ایده‌دار یک استودیوی فیلم مستقل مبتنی بر هوش مصنوعی است که بر خلق جهان‌های سینمایی ، روایت بصری ممتاز و توسعه آثار علمی‌تخیلی نسل بعد تمرکز دارد. این استودیو با ترکیب فیلمسازان، هنرمندان، طراحان و جریان‌های تولید پیشرفته هوش مصنوعی، پروژه‌های بلند پروازانه‌ای را برای مخاطبان جهانی توسعه می‌دهد.</p><span class="mgmt-label">MANAGEMENT</span><div class="mgmt-grid"><div class="mgmt-card"><span class="mgmt-role">C.E.O</span><div class="mgmt-name">شادی بهتاش</div><div class="mgmt-title">مدیر عامل</div></div><div class="mgmt-card"><span class="mgmt-role">MARKETING HEAD</span><div class="mgmt-name">لیلا پاکزاد</div><div class="mgmt-title">مدیر مارکتینگ</div></div><div class="mgmt-card"><span class="mgmt-role">ART DIRECTOR</span><div class="mgmt-name">کاوه سجادی حسینی</div><div class="mgmt-title">مدیر هنری</div></div><div class="mgmt-card"><span class="mgmt-role">MEMBER OF BOARD</span><div class="mgmt-name">امیر کفایتی</div><div class="mgmt-title">هیئت مدیره</div></div></div></div>',
+contact:'<div class="anim-contact"><span class="label">GET IN TOUCH</span><h2>CONTACT</h2><p class="sub">مسیر خود را انتخاب کنید</p><div class="contact-grid"><div class="contact-item" id="contact-item-creative" onclick="showContactDetail(\'creative\')"><div class="contact-item-title">همکاری خلاق</div><div class="contact-item-desc">فیلمساز، طراح، نویسنده</div></div><div class="contact-item" id="contact-item-invest" onclick="showContactDetail(\'invest\')"><div class="contact-item-title">سرمایه‌گذاری</div><div class="contact-item-desc">مشارکت تجاری</div></div><div class="contact-item" id="contact-item-order" onclick="showContactDetail(\'order\')"><div class="contact-item-title">سفارش سرویس</div><div class="contact-item-desc">تبلیغات، صدا، ویدیو</div></div><div class="contact-item" id="contact-item-social" onclick="showContactDetail(\'social\')"><div class="contact-item-title">شبکه‌های اجتماعی</div><div class="contact-item-desc">ما را دنبال کنید</div></div></div><div class="contact-detail" id="contact-detail-box" style="display:none;"></div></div>'
 };
-
-function buildServicesGrid(lang){
-  return '<div class="services-grid">' + SERVICES.map(function(s){
-    var primary = lang==='en' ? s.en : s.fa;
-    var secondary = lang==='en' ? s.fa : s.en;
-    return '<div class="service-item"><div class="service-caption">'+secondary+'</div><div class="service-title">'+primary+'</div></div>';
-  }).join('') + '</div>';
-}
-
-function buildContactGrid(lang){
-  return '<div class="contact-grid">' + CONTACT_OPTIONS.map(function(o){
-    return '<div class="contact-item" id="contact-item-'+o.key+'" onclick="showContactDetail(\''+o.key+'\')"><div class="contact-item-title">'+o.title[lang]+'</div><div class="contact-item-desc">'+o.desc[lang]+'</div></div>';
-  }).join('') + '</div>';
-}
-
-function buildMgmtGrid(lang){
-  return '<div class="mgmt-grid">' + MGMT.map(function(m){
-    return '<div class="mgmt-card"><span class="mgmt-role">'+m.role+'</span><div class="mgmt-name">'+m.name[lang]+'</div><div class="mgmt-title">'+m.title[lang]+'</div></div>';
-  }).join('') + '</div>';
-}
-
-function buildFormHTML(t, lang){
-  var f = FORM_TEXT[lang];
-  var mp = MARKETING_PERSON[lang];
-  return '<div class="invest-layout"><div class="invest-form-side"><div id="'+t+'-form-fields"><div class="invest-form"><input type="text" id="'+t+'-name" placeholder="'+f.name+'"><input type="text" id="'+t+'-company" placeholder="'+f.company+'"><input type="text" id="'+t+'-phone" placeholder="'+f.phone+'"><input type="email" id="'+t+'-email" placeholder="'+f.email+'"><button class="invest-submit" onclick="submitForm(\''+t+'\')">'+f.submit+'</button></div></div><div class="invest-success" id="'+t+'-success">'+f.success+'</div></div><div class="invest-person-side"><span class="invest-person-label">MARKETING HEAD</span><div class="invest-person-name">'+mp.name+'</div><div class="invest-person-title">'+mp.title+'</div><div class="invest-person-phone"><span>+989306144119</span><span class="phone-icon">\u{1F4DE}</span></div><div class="invest-person-email"><a href="mailto:eededar@gmail.com">eededar@gmail.com</a><span class="email-icon">\u2709\uFE0F</span></div></div></div>';
-}
-
-function getContactDetails(lang){
-  var creativeText = lang==='en'
-    ? '<p>Send your idea, project, or portfolio to <a href="mailto:eededar@gmail.com">eededar@gmail.com</a>.</p>'
-    : '<p>ایده و پروژه و یا نمونه کار خود را به آدرس <a href="mailto:eededar@gmail.com">eededar@gmail.com</a> ارسال کنید.</p>';
-  return {
-    creative: creativeText,
-    invest: buildFormHTML('invest', lang),
-    order: buildFormHTML('order', lang),
-    social: '<div class="social-links"><a class="social-link" href="https://instagram.com/eede.dar" target="_blank"><svg class="social-icon" viewBox="0 0 24 24" fill="none" stroke="#1A1A2E" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#1A1A2E" stroke="none"/></svg><span class="social-handle">@eede.dar</span></a><a class="social-link" href="https://youtube.com/@eededar" target="_blank"><svg class="social-icon" viewBox="0 0 24 24" fill="#1A1A2E"><path d="M23 7s-.3-2-1.2-2.8c-1.1-1.2-2.4-1.2-3-1.3C16.4 2.8 12 2.8 12 2.8s-4.4 0-6.8.2c-.6.1-1.9.1-3 1.3C1.3 5 1 7 1 7S.7 9.1.7 11.3v2c0 2.1.3 4.2.3 4.2s.3 2 1.2 2.8c1.1 1.2 2.6 1.1 3.3 1.2C7.5 21.6 12 21.7 12 21.7s4.4 0 6.8-.3c.6-.1 1.9-.1 3-1.3.9-.8 1.2-2.8 1.2-2.8s.3-2.1.3-4.2v-2C23.3 9.1 23 7 23 7zM9.7 15.5V8.4l8.1 3.6-8.1 3.5z"/></svg><span class="social-handle">@eededar</span></a></div>'
-  };
-}
-
-function getContents(lang){
-  var studioSub = lang==='en' ? 'EEDEDAR is a creative studio built on artificial intelligence.' : 'ایده\u200cدار یک استودیوی خلاق مبتنی بر هوش مصنوعی است';
-  var productionsPara = lang==='en'
-    ? 'An original science-fiction universe \u2014 advanced civilizations, planetary cultures, and humanity\u2019s future among the stars.'
-    : 'یک جهان علمی\u200cتخیلی، تمدن\u200cهای پیشرفته، فرهنگ\u200cهای سیاره\u200cای و آینده بشریت در میان ستارگان';
-  var aboutTitle = lang==='en' ? 'EEDEDAR' : 'ایده\u200cدار';
-  var aboutPara = lang==='en'
-    ? 'EEDEDAR is an independent, AI-powered film studio focused on building cinematic worlds, delivering premium visual storytelling, and developing next-generation science-fiction work. By bringing together filmmakers, artists, designers, and advanced AI production pipelines, the studio develops ambitious projects for a global audience.'
-    : 'ایده\u200cدار یک استودیوی فیلم مستقل مبتنی بر هوش مصنوعی است که بر خلق جهان\u200cهای سینمایی ، روایت بصری ممتاز و توسعه آثار علمی\u200cتخیلی نسل بعد تمرکز دارد. این استودیو با ترکیب فیلمسازان، هنرمندان، طراحان و جریان\u200cهای تولید پیشرفته هوش مصنوعی، پروژه\u200cهای بلند پروازانه\u200cای را برای مخاطبان جهانی توسعه می\u200cدهد.';
-  var contactSub = lang==='en' ? 'Choose your path' : 'مسیر خود را انتخاب کنید';
-
-  return {
-    studio: '<div class="anim-studio"><span class="label">WHAT WE DO</span><h2>STUDIO</h2><p class="sub">'+studioSub+'</p>' + buildServicesGrid(lang) + '</div>',
-    productions: '<div class="anim-productions"><span class="label">CURRENT PROJECT</span><div class="status-badge">IN PRODUCTION</div><span class="earthos-title">EARTHOS</span><p>'+productionsPara+'</p><a class="earthos-link" href="http://earthos.ir" target="_blank">ENTER EARTHOS</a></div>',
-    about: '<div class="anim-about"><span class="label">WHO WE ARE</span><h2>'+aboutTitle+'</h2><p class="about-para">'+aboutPara+'</p><span class="mgmt-label">MANAGEMENT</span>' + buildMgmtGrid(lang) + '</div>',
-    contact: '<div class="anim-contact"><span class="label">GET IN TOUCH</span><h2>CONTACT</h2><p class="sub">'+contactSub+'</p>' + buildContactGrid(lang) + '<div class="contact-detail" id="contact-detail-box" style="display:none;"></div></div>'
-  };
-}
-
-/* ============== LANGUAGE STATE ============== */
-var currentLang = 'fa';
-
-function updateLangButtons(){
-  ['lang-btn-fa','mlang-btn-fa'].forEach(function(id){var b=document.getElementById(id);if(b)b.classList.toggle('active', currentLang==='fa');});
-  ['lang-btn-en','mlang-btn-en'].forEach(function(id){var b=document.getElementById(id);if(b)b.classList.toggle('active', currentLang==='en');});
-}
-
-function setLanguage(lang, manual){
-  currentLang = lang;
-  document.documentElement.lang = lang;
-  document.body.classList.toggle('lang-en', lang==='en');
-  document.body.classList.toggle('lang-fa', lang==='fa');
-  document.title = PAGE_TITLE[lang];
-  document.getElementById('tagline').textContent = TAGLINE[lang];
-  updateLangButtons();
-  if(manual){ try{ localStorage.setItem('eededar_lang', lang); }catch(e){} }
-  var contentEl = document.getElementById('content');
-  if(contentEl.classList.contains('visible') && currentSection !== 'home'){
-    document.getElementById('content-inner').innerHTML = getContents(currentLang)[currentSection] || '';
-  }
-}
-
-function detectLanguage(){
-  var stored = null;
-  try{ stored = localStorage.getItem('eededar_lang'); }catch(e){}
-  if(stored === 'fa' || stored === 'en'){ setLanguage(stored, false); return; }
-  setLanguage('fa', false);
-  var controller = (typeof AbortController !== 'undefined') ? new AbortController() : null;
-  var timeoutId = controller ? setTimeout(function(){ controller.abort(); }, 3000) : null;
-  fetch('https://ipapi.co/json/', controller ? { signal: controller.signal } : {})
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      if(timeoutId) clearTimeout(timeoutId);
-      var stillNoManual = null;
-      try{ stillNoManual = localStorage.getItem('eededar_lang'); }catch(e){}
-      if(stillNoManual) return;
-      if(data && data.country_code && data.country_code !== 'IR'){
-        setLanguage('en', false);
-      }
-    })
-    .catch(function(){ if(timeoutId) clearTimeout(timeoutId); });
-}
-
-function submitForm(t){
-  var f = FORM_TEXT[currentLang];
-  var n=document.getElementById(t+'-name').value,c=document.getElementById(t+'-company').value,p=document.getElementById(t+'-phone').value,e=document.getElementById(t+'-email').value;
-  if(!n||!e){alert(f.missing);return;}
-  fetch('https://formspree.io/f/mwvjregd',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:n,company:c,phone:p,email:e,type:t})}).then(function(r){if(r.ok){document.getElementById(t+'-form-fields').style.display='none';document.getElementById(t+'-success').style.display='block';}else{alert(f.error);}}).catch(function(){alert(f.error);});
-}
-
-function showContactDetail(type){
-  document.querySelectorAll('.contact-item').forEach(function(el){el.classList.remove('active');});
-  document.getElementById('contact-item-'+type).classList.add('active');
-  var detail=document.getElementById('contact-detail-box');
-  var details = getContactDetails(currentLang);
-  if(details[type]){detail.innerHTML=details[type];detail.style.display='block';}else{detail.style.display='none';}
-}
-
 const container=document.getElementById('canvas-container');
 const scene=new THREE.Scene();scene.background=new THREE.Color(0xF0F0F2);
 const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);camera.position.z=7;
@@ -429,14 +256,12 @@ for(let x=0;x<gridSize;x++)for(let y=0;y<gridSize;y++)for(let z=0;z<gridSize;z++
 scene.add(new THREE.AmbientLight(0xffffff,1.5));const d1=new THREE.DirectionalLight(0xffffff,2.5);d1.position.set(5,5,5);scene.add(d1);const d2=new THREE.DirectionalLight(0xffffff,1);d2.position.set(-5,-3,-5);scene.add(d2);const d3=new THREE.DirectionalLight(0xffffff,0.8);d3.position.set(0,10,0);scene.add(d3);
 let currentSection='home',mouseX=0,mouseY=0,time=0;
 document.addEventListener('mousemove',function(e){mouseX=(e.clientX/window.innerWidth-0.5)*0.6;mouseY=(e.clientY/window.innerHeight-0.5)*0.6;});
-function showContent(section){const content=document.getElementById('content');const lcd=document.getElementById('lcd-screen');document.getElementById('content-inner').innerHTML=getContents(currentLang)[section]||'';content.classList.add('visible');lcd.classList.remove('poweron','poweroff');void lcd.offsetWidth;lcd.classList.add('poweron');setTimeout(function(){content.classList.add('shown');if(section==='productions')startBlink();},50);}
+function showContent(section){const content=document.getElementById('content');const lcd=document.getElementById('lcd-screen');document.getElementById('content-inner').innerHTML=contents[section]||'';content.classList.add('visible');lcd.classList.remove('poweron','poweroff');void lcd.offsetWidth;lcd.classList.add('poweron');setTimeout(function(){content.classList.add('shown');if(section==='productions')startBlink();},50);}
 function hideContent(){stopBlink();const content=document.getElementById('content');const lcd=document.getElementById('lcd-screen');content.classList.remove('shown');lcd.classList.remove('poweron');lcd.classList.add('poweroff');setTimeout(function(){content.classList.remove('visible');lcd.classList.remove('poweroff');},300);}
 function goSection(section){currentSection=section;document.querySelectorAll('.nav-btn,.mobile-menu-btn').forEach(function(b){b.classList.remove('active');});var btn=document.getElementById('btn-'+section);if(btn)btn.classList.add('active');var mbtn=document.getElementById('mbtn-'+section);if(mbtn)mbtn.classList.add('active');document.getElementById('tagline').style.display=section==='home'?'block':'none';document.getElementById('title').style.display=section==='home'?'block':'none';hideContent();setTimeout(function(){if(section==='home'){cubes.forEach(function(c,i){c.scale.set(1,1,1);targetPositions[i].copy(homePositions[i]);});return;}cubes.forEach(function(_,i){const dir=homePositions[i].clone().normalize();if(section==='studio'){targetPositions[i].set(dir.x*(4+Math.random()*3),dir.y*(4+Math.random()*3),dir.z*(4+Math.random()*3));setTimeout(function(){showContent('studio');},600);}if(section==='productions'){const angle=(i/cubes.length)*Math.PI*2;targetPositions[i].set(Math.cos(angle)*(4+Math.random()),(Math.random()-0.5)*2,Math.sin(angle)*(4+Math.random()));setTimeout(function(){showContent('productions');},600);}if(section==='about'){targetPositions[i].set(dir.x*(5+Math.random()*4),dir.y*(5+Math.random()*4),-4-Math.random()*4);setTimeout(function(){showContent('about');},800);}if(section==='contact'){targetPositions[i].set(dir.x*(5+Math.random()*3),dir.y*(5+Math.random()*3),(Math.random()-0.5)*6);setTimeout(function(){showContent('contact');},600);}});},350);}
 function animate(){requestAnimationFrame(animate);time+=0.015;cubes.forEach(function(cube,i){cube.position.lerp(targetPositions[i],0.08);});const positions=waveGeo.getAttribute('position');for(let i=0;i<waveWidth;i++)for(let j=0;j<waveDepth;j++){const idx=i*waveDepth+j;positions.setY(idx,Math.sin(positions.getX(idx)*0.8+time)*0.3+Math.cos(positions.getZ(idx)*0.6+time*0.8)*0.2);}positions.needsUpdate=true;if(currentSection==='home'){group.rotation.x+=0.002;group.rotation.y+=0.004;}else{group.rotation.x*=0.95;group.rotation.y*=0.95;}camera.position.x+=(mouseX-camera.position.x)*0.04;camera.position.y+=(-mouseY-camera.position.y)*0.04;camera.lookAt(scene.position);renderer.render(scene,camera);}
 animate();
 window.addEventListener('resize',function(){camera.aspect=window.innerWidth/window.innerHeight;camera.updateProjectionMatrix();renderer.setSize(window.innerWidth,window.innerHeight);});
-
-detectLanguage();
 </script>
 </body>
 </html>
